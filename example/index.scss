@@ -1,0 +1,30 @@
+line-chart {
+  &:not(:last-child) {
+    border-bottom: 2px solid #e2e2e2;
+  }
+}
+
+line-chart-axis {
+  .line-chart-leftpart {
+    display: flex;
+    align-items: center;
+    padding: 2px 18px;
+
+    label {
+      margin-left: 12px;
+      font-size: 14px;
+    }
+
+    input {
+      margin-right: 6px;
+    }
+
+    border-bottom: 2px solid #e2e2e2;
+    border-right: 2px solid #e2e2e2;
+  }
+}
+
+.line-chart-group {
+  height: 350px;
+  overflow: auto;
+}

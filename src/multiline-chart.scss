@@ -1,0 +1,104 @@
+%line-chart-leftpart {
+  width: 360px;
+}
+
+multiline-chart-axis {
+  display: flex;
+
+  .line-chart-leftpart {
+    @extend %line-chart-leftpart;
+  }
+
+  svg {
+    margin-top: auto;
+    flex: 1;
+    shape-rendering: crispEdges;
+    stroke-width: 1px
+  }
+
+  line {
+    stroke: #acacac;
+  }
+
+  text {
+    font-size: 10px;
+    stroke: none;
+    fill: #848e96;
+  }
+
+  path {
+    fill: none;
+    stroke: #acacac;
+  }
+}
+
+multiline-chart  {
+  display: flex;
+  height: 165px;
+
+  .line-chart-leftpart {
+    @extend %line-chart-leftpart;
+  }
+
+  .line-chart-leftpart {
+    overflow-x: hidden;
+  }
+
+  svg {
+    flex: 1;
+    margin: 0px 24px;
+  }
+
+  dl {
+    margin: 0;
+    padding: 6px 12px 0 4px;
+    border-right: 2px solid #e2e2e2;
+    font-size: 14px;
+  }
+
+  dd {
+    display: flex;
+    margin-left: 15px;
+
+    label {
+      display: block;
+      width: 180px;
+    }
+
+    div {
+      flex: 1;
+      text-overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+
+  path {
+    fill: none;
+  }
+
+  .hidden {
+    visibility: hidden;
+  }
+
+  .indicator {
+    font-size: 12px;
+    stroke: none;
+    pointer-events: none;
+
+    line {
+      stroke: #aaa;
+      stroke-width: 2px;
+      stroke-dasharray: 6, 6;
+    }
+
+    rect {
+      fill: rgba(0,0,0, .6);
+    }
+
+    text {
+      fill: white;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+  }
+}

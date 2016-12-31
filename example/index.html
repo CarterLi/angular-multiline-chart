@@ -1,0 +1,17 @@
+<!doctype html>
+<meta charset="utf-8" />
+<script src="./dist/bundle.js"></script>
+<main id="chartMain" ng-app="app" ng-controller="RootController as $ctrl">
+  <time-spanner ng-model="$ctrl.timeExtent" x-data="$ctrl.datasetComputers[0].data[0].value"></time-spanner>
+  <multiline-chart-axis ng-model="$ctrl.timeExtent" ng-cloak>
+    Type:
+    <label><input type="radio" name="lineChartAxis" ng-model="$ctrl.lineChartType" value="Computer" />Group1: </label>
+    <label><input type="radio" name="lineChartAxis" ng-model="$ctrl.lineChartType" value="Type" />Group2: </label>
+  </multiline-chart-axis>
+  <div class="line-chart-group" ng-if="$ctrl.lineChartType === 'Computer'">
+    <multiline-chart ng-repeat="computer in $ctrl.datasetComputers" ng-model="$ctrl.timeExtent" x-value-domain="$ctrl.valueExtent" x-dataset="computer" x-base-element="#chartMain" x-title="主机："></multiline-chart>
+  </div>
+  <div class="line-chart-group" ng-if="$ctrl.lineChartType === 'Type'">
+    <multiline-chart ng-repeat="type in $ctrl.datasetTypes" ng-model="$ctrl.timeExtent" x-value-domain="$ctrl.valueExtent" x-dataset="type" x-base-element="#chartMain" x-title="性能指标："></multiline-chart>
+  </div>
+</main>

@@ -1,0 +1,17 @@
+{
+  "name": "angular-multiline-chart",
+  "version": "1.0.0",
+  "description": "Simple line chart directive written in angularjs v1 and d3, used internally in Sharplook project",
+  "main": "index.js",
+  "repository": "git@github.com:CarterLi/angular-multiline-chart.git",
+  "author": "Carter Li <carter.li@eoitek.com>",
+  "license": "SATA",
+  "dependencies": {
+    "angular": "1",
+    "d3": "3",
+    "randomcolor": "^0.4.4"
+  },
+  "devDependencies": {
+    "eslint": "^3.12.2"
+  }
+}
