@@ -1,5 +1,5 @@
 const angular = require('angular');
-const angularMultilineChart = require('angular-multiline-chart');
+const angularMultilineChart = require('..');
 
 require('./index.scss');
 

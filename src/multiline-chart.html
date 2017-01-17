@@ -18,8 +18,8 @@
       <circle ng-repeat="datum in dataset.data" r="3" ng-attr-fill="{{datum.__color}}" ng-class="{hidden: !datum.__checked}" />
     </g>
     <g class="time-label" ng-class="{hidden: !indicatorTime}">
-      <rect height="2em" rx="5" ry="5" x="10" width="64"  />
-      <text x="42" y="1.1em" ng-bind="indicatorTime | date: 'HH:mm:ss'" />
+      <rect height="2em" rx="5" ry="5" width="64"  />
+      <text x="32" y="1.1em" ng-bind="indicatorTime | date: 'HH:mm:ss'" />
     </g>
   </g>
 </svg>

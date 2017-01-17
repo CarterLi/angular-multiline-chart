@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "dependencies": {
-    "angular-multiline-chart": "file:.."
-  },
+  "dependencies": {},
   "devDependencies": {
     "css-loader": "^0.26.1",
     "html-loader": "^0.4.4",

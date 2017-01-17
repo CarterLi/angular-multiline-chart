@@ -4,6 +4,8 @@ const randomColor = require('randomcolor');
 
 require('./multiline-chart.scss');
 
+const colorMapping = Object.create(null);
+
 angular.module('angular-multiline-chart', [])
   .directive('checkboxIndeterminate', function () {
     return {
@@ -24,6 +26,7 @@ angular.module('angular-multiline-chart', [])
         dataset: '=',
         valueDomain: '&',
         title: '@',
+        specifiedTime: '&',
       },
       template: require('./multiline-chart.html'),
       link(scope, element, attr, ngModel) {
@@ -39,7 +42,8 @@ angular.module('angular-multiline-chart', [])
 
         dataset.forEach(x => {
           if (x.__checked == null) x.__checked = true;
-          x.__color = randomColor({ seed: x.name, luminosity: 'dark' });
+
+          x.__color = randomColor({ seed: colorMapping[x.name] || (colorMapping[x.name] = (Math.random() * 10000) | 0), luminosity: 'dark' });
           const domain = x.domain || scope.dataset.domain || scope.valueDomain();
           if (!domain) throw new TypeError('Value domain expected');
           x.__scaleY = d3.scale.linear()
@@ -58,7 +62,7 @@ angular.module('angular-multiline-chart', [])
         svg.on('mousemove.timeLabel', function () {
           const [x, y] = d3.mouse(this);
           timelabel
-            .attr('transform', `translate(5 ${y - 9})`)
+            .attr('transform', `translate(${x > width - 80 ? -80 : 16} ${y - 9})`)
             .select('text').text(timeFormatter(scaleX.invert(x)));
         });
         svg.on('mouseout.timeLabel', function () {
@@ -78,7 +82,7 @@ angular.module('angular-multiline-chart', [])
               let end = path.getTotalLength();
               let beg = end / 2;
 
-              dataset[i].__current = void 0;
+              dataset[i].__current = undefined;
 
               while (Math.abs(beg - end) > .01) {
                 const point = path.getPointAtLength(beg);
@@ -101,10 +105,26 @@ angular.module('angular-multiline-chart', [])
         });
 
         const genPath = d3.svg.line()
+          .interpolate('monotone')
           .x(t => scaleX(t[0]))
           .y(function (t) { return this(t[1]); });
 
         scope.genPath = d => genPath.call(d.__scaleY, d.value);
+
+        const specifiedLine = (time => {
+          if (time) {
+            return svg.append('line')
+              .attr('x1', scaleX(scope.specifiedTime()))
+              .attr('x2', scaleX(scope.specifiedTime()))
+              .attr('y1', 0)
+              .attr('y2', '100%')
+              .attr('stroke-width', 2)
+              .attr('stroke', 'green')
+              .attr('class', 'specified-time-line');
+          }
+
+          return null;
+        })(scope.specifiedTime());
 
         ngModel.$render = () => {
           if (ngModel.$viewValue == null) return;
@@ -113,6 +133,10 @@ angular.module('angular-multiline-chart', [])
           svg.selectAll('.paths path')
             .data(dataset)
             .attr('d', scope.genPath);
+
+          specifiedLine && specifiedLine
+            .attr('x1', scaleX(scope.specifiedTime()))
+            .attr('x2', scaleX(scope.specifiedTime()));
         };
       },
       controller($scope) {
